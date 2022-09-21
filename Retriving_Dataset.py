@@ -2,9 +2,6 @@ import pandas as pd
 import yfinance as yf
 
 
-
-
-
 def SavingDataPrices(From, to,csvFileName):
     startDate=From
     endDate= to
@@ -12,23 +9,6 @@ def SavingDataPrices(From, to,csvFileName):
     df=yf.download('TWTR',start = startDate, end = endDate,interval='1m',utc=True,threads = True)
     
     #####      Saving Data In CSV file   ####
-
-    """columnsNames=["Open","Open","Open","Open","lastTradedVolume"]
-    DateIndexName=[]
-    columnsValues=[]
-    DataGrouped=[]
-    for i in prices_Data:
-        DateIndexName.append(i["snapshotTime"])
-        columnsValues.append(i["openPrice"]["bid"])
-        columnsValues.append(i["closePrice"]["bid"])
-        columnsValues.append(i["highPrice"]["bid"])
-        columnsValues.append(i["lowPrice"]["bid"])
-        columnsValues.append(i["lastTradedVolume"])
-        DataGrouped.append(columnsValues)
-        columnsValues=[]
-
-    df = pd.DataFrame(DataGrouped,index=DateIndexName, columns=columnsNames)"""
-     
     try:
         existing=pd.read_csv(csvFileName, index_col="Datetime")
         #print(existing)
