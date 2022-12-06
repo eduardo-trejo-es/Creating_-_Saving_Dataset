@@ -1,7 +1,8 @@
 import pandas as pd
 import yfinance as yf
 
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 
@@ -55,3 +56,36 @@ class DatasetGenerator:
         df["DayNumber"]=weekday_Number
 
         self.SavingDataset(df,csvFileName, csvFileName_New,False)
+        
+    def Add_ColumsFourier_Transform(self,periodic_Components_num,column_to_use, Origin_File_Path,Destiny_File_Path):
+        csvFileName=Origin_File_Path
+        df=pd.read_csv(csvFileName, index_col="Date")
+        
+        Colum_Used=column_to_use
+
+        data_FT = df[Colum_Used]
+        
+        
+        dateIndex=[]
+        for i in data_FT.index:
+            dateIndex.append(i)
+            
+            
+        array_like=np.asarray(data_FT).tolist()
+        The_fft = np.fft.fft(array_like)
+        fft_df =pd.DataFrame({'fft':The_fft})
+        fft_df['absolute']=fft_df['fft'].apply(lambda x: np.abs(x))
+        fft_df['angle']=fft_df['fft'].apply(lambda x: np.angle(x))
+        fft_list = np.asarray(fft_df['fft'].tolist())
+        
+        
+        Periodic_Components_Num=periodic_Components_num
+
+        fft_list_m10= np.copy(fft_list); 
+        fft_list_m10[Periodic_Components_Num:-Periodic_Components_Num]=0
+        data_fourier=np.fft.ifft(fft_list_m10)
+
+        df["FFT_{}_{}".format(Colum_Used,periodic_Components_num)]=data_fourier[0]
+        
+        self.SavingDataset(df,Origin_File_Path, Destiny_File_Path, False)
+        
