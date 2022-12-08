@@ -4,7 +4,7 @@ import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+import cmath
 
 class DatasetGenerator:
     def RetivingDataPrices_Yahoo(self,From, to,csvFileName,csvFileName_New):
@@ -84,8 +84,15 @@ class DatasetGenerator:
         fft_list_m10= np.copy(fft_list); 
         fft_list_m10[Periodic_Components_Num:-Periodic_Components_Num]=0
         data_fourier=np.fft.ifft(fft_list_m10)
-
-        df["FFT_{}_{}".format(Colum_Used,periodic_Components_num)]=data_fourier[0]
         
+        Magnitud=[]
+        Angle=[]
+        for i in data_fourier:
+            magnitud, angle=cmath.polar(i)
+            Magnitud.append(magnitud)
+            Angle.append(angle)
+        
+        df["FFT_Mag_{}_{}".format(Colum_Used,periodic_Components_num)]=Magnitud
+        df["FFT_Angl_{}_{}".format(Colum_Used,periodic_Components_num)]=Angle     
         self.SavingDataset(df,Origin_File_Path, Destiny_File_Path, False)
         

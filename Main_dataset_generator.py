@@ -6,4 +6,13 @@ dataSet_Gen= DatasetGenerator()
 
 #dataSet_Gen.AddColumnWeekDay("/Users/eduardo/Desktop/Creating_-_Saving_Dataset/CRUDE_OIL/CRUDE_OIL_DataCSV.csv", "/Users/eduardo/Desktop/Creating_-_Saving_Dataset/CRUDE_OIL/CRUDE_OIL_WeekDayNum.csv")
 
-dataSet_Gen.Add_ColumsFourier_Transform(4,'High', "/Users/eduardo/Desktop/Creating_-_Saving_Dataset/CRUDE_OIL/CRUDE_OIL_DataCSV2000_8_23_today.csv","/Users/eduardo/Desktop/Creating_-_Saving_Dataset/CRUDE_OIL/CRUDE_OIL_Dataand_FFT.csv")
+
+
+#Generate new FFT columns done :)
+"""Column=['Open','High','Low','Close','Adj Close','Volume']
+frec=[10,50,100]
+
+for i in Column:
+    for j in frec:
+        dataSet_Gen.Add_ColumsFourier_Transform(j,i, "/Users/eduardo/Desktop/Creating_-_Saving_Dataset/CRUDE_OIL/CRUDE_OIL_Dataand_FFT_10_50_100.csv","/Users/eduardo/Desktop/Creating_-_Saving_Dataset/CRUDE_OIL/CRUDE_OIL_Dataand_FFT_10_50_100.csv")      
+"""
